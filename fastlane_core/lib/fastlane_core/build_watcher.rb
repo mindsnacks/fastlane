@@ -81,14 +81,7 @@ module FastlaneCore
         watched_app_version = remove_version_leading_zeros(version: watched_app_version)
         watched_build_version = remove_version_leading_zeros(version: watched_build_version)
 
-        # App Store Connect will allow users to upload  X.Y is the same as X.Y.0 and treat them as the same version
-        # However, only the first uploaded version format will be the one that is queryable
-        # This could lead to BuildWatcher never finding X.Y.0 if X.Y was uploaded first as X.Y will only yield results
-        #
-        # This will add an additional request to search for both X.Y and X.Y.0 but
-        # will give preference to the version format specified passed in
-        watched_app_version_alternate = alternate_version(watched_app_version)
-        versions = [watched_app_version, watched_app_version_alternate].compact
+        versions = [watched_app_version].compact
 
         if versions.empty?
           if select_latest
